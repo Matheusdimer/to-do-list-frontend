@@ -56,7 +56,7 @@ select:focus {
   border-bottom: 2px solid #ff3333;
 }
 
-.error-mensage {
+.error-message {
   font-size: 10pt;
   color: #ff3333;
 }

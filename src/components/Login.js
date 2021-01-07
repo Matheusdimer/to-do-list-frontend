@@ -49,13 +49,13 @@ export default function Login() {
     <div className="auth-page">
       { redirect && <Redirect to='/app' /> }
       <div className="loginBox">
-        <p className="label">E-mail{isFieldErr('email') && <span className='error-mensage'>Usuário inválido</span>}</p>
+        <p className="label">E-mail{isFieldErr('email') && <span className='error-message'>Usuário inválido</span>}</p>
         <input
           className={`auth-input ${isFieldErr('email') ? 'error' : ''}`}
           type="email"
           onChange={({ target }) => setEmail(target.value)}
         ></input>
-        <p className="label">Senha{isFieldErr('password') && <span className='error-mensage'>Senha inválida</span>}</p>
+        <p className="label">Senha{isFieldErr('password') && <span className='error-message'>Senha inválida</span>}</p>
         <input
           className={`auth-input ${isFieldErr('password') ? 'error' : ''}`}
           type="password"
