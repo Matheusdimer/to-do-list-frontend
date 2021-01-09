@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Application from "./pages/Application";
-import isAuthenticated from "./auth/isAuthenticated";
-import { AuthProvider } from "./contexts/authContext";
+import { AuthProvider, AuthContext } from "./contexts/authContext";
 
 function PrivateRoute({ component: Component, ...rest }) {
+  const session = useContext(AuthContext);
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated() ? (
+        !session.loggedIn ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/", state: { from: props.location } }} />
