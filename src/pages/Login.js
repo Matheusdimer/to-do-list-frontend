@@ -1,53 +1,24 @@
 import React from "react";
 import "../style/App.css";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
-import isAuthenticated from '../auth/isAuthenticated'
-
-const api = require("../config/apiConfig.json");
+import { AuthContext } from '../contexts/authContext';
 
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [fieldErr, setFieldErr] = useState();
-  const [redirect, setRedirect] = useState(false);
 
-  useEffect(() => {
-    isAuthenticated() ? setRedirect(true) : setRedirect(false);
-  },[]);
+  const { session, signIn } = useContext(AuthContext);
 
-  async function authenticate() {
-    const url = api.server + "/auth/authenticate";
-
-    await fetch(url, {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-      body: JSON.stringify({
-        email,
-        password
-      })
-    }).then((res) => res.json()).then((json) => {
-      console.log(json);
-      if (json.token){
-        localStorage.setItem('TOKEN', json.token);
-        setRedirect(true)
-      } else if (json.field){
-        setFieldErr(json.field)
-      }
-    }).catch((err) => {
-      console.log("Failed to authenticate: " + err);
-    });
-  }
+  document.title = "Login"
 
   function isFieldErr(field) {
-    return fieldErr === field ? true : false;
+    return session.fieldErr === field ? true : false;
   }
 
   return (
     <div className="auth-page">
-      { redirect && <Redirect to='/app' /> }
+      { session.loggedIn && <Redirect to='/app' /> }
       <div className="loginBox">
         <p className="label">E-mail{isFieldErr('email') && <span className='error-message'>Usuário inválido</span>}</p>
         <input
@@ -61,7 +32,7 @@ export default function Login() {
           type="password"
           onChange={({ target }) => setPassword(target.value)}
         ></input>
-        <button type="submit" className="auth-button" onClick={() => authenticate()}>
+        <button type="submit" className="auth-button" onClick={() => signIn(email, password)}>
           Login
         </button>
         <div className="sign-up">

@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import Home from "./components/Home"
-import Login from "./components/Login";
-import Register from "./components/Register";
-import isAuthenticated from './auth/isAuthenticated'
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Application from "./pages/Application";
+import isAuthenticated from "./auth/isAuthenticated";
+import { AuthProvider } from "./contexts/authContext";
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -22,15 +24,15 @@ function PrivateRoute({ component: Component, ...rest }) {
 
 export default function Routes() {
   return (
-    <React.StrictMode>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Switch>
           <Route path="/" exact={true} component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <PrivateRoute path='/app' component={() => <h1>Você logou com sucesso!</h1>} />
+          <PrivateRoute path="/app" component={Application} />
         </Switch>
-      </BrowserRouter>
-    </React.StrictMode>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
