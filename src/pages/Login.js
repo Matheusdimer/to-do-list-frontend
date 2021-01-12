@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
-import { ThemeContext } from '../contexts/ThemeContext';
 
 export default function Login() {
   const [email, setEmail] = useState();
