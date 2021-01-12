@@ -1,14 +1,15 @@
 import React from "react";
-import "../style/App.css";
 import { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const { session, signIn } = useContext(AuthContext);
+  const { switchTheme } = useContext(ThemeContext);
 
   document.title = "Login"
 

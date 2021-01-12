@@ -4,7 +4,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Application from "./pages/Application";
+import { GlobalStyle } from "./style/GlobalStyle";
 import { AuthProvider, AuthContext } from "./contexts/authContext";
+import { ThemeProvider, ThemeContext } from "./contexts/ThemeContext";
 
 function PrivateRoute({ component: Component, ...rest }) {
   const session = useContext(AuthContext);
@@ -23,8 +25,11 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 export default function Routes() {
+  const { theme } = useContext(ThemeContext);
+  console.log(theme);
   return (
     <BrowserRouter>
+      <GlobalStyle theme={theme} />
       <AuthProvider>
         <Switch>
           <Route path="/" exact={true} component={Home} />

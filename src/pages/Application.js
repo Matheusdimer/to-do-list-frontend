@@ -1,37 +1,65 @@
 import React, { useState, useContext } from "react";
+import Switch from "react-switch";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../contexts/authContext"
+import { AuthContext } from "../contexts/authContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Application() {
   const { session, logout } = useContext(AuthContext);
   const [redirect, setRedirect] = useState(!session.loggedIn);
 
-  document.title = "To Do List"
+  const { theme, switchTheme, dark } = useContext(ThemeContext);
+
+  document.title = "To Do List";
 
   function disconnect() {
     setRedirect(true);
     logout();
   }
-  /*
-  fetch(api.server + '/projects', {
-    method: 'GET',
-    headers: new Headers({
-      "Authorization": "Bearer " + localStorage.getItem('TOKEN')
-    })
-  }).then((res) => res.json()).then((json) => {
-    console.log(json);
-  })
-  */
+
+  function SideBar() {
+    return (
+      <div className="sidebar">
+        <div className="sidebar-item">
+          <p>Adicionar</p>
+        </div>
+        <div className="sidebar-item">
+          <p>Excluir</p>
+        </div>
+        <div className="sidebar-item">
+          <p>Salvar</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div className="application">
+      <header>
+        <div className="loginInfo">
+          <h1>To Do List</h1>
+          <div style={{display: "flex", flexDirection: "row", alignItems: "center", columnGap: 5}}>
+            <p>Modo Noturno</p>
+            <Switch
+              checked={dark}
+              height={15}
+              width={40}
+              onChange={() => switchTheme()}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              handleDiameter={20}
+              onColor={theme.secundary}
+            />
+          </div>
+        </div>
+        <div className="loginInfo">
+          <h2>{session.user.name}</h2>
+          <button onClick={() => disconnect()}>Sair</button>
+        </div>
+      </header>
       {redirect && <Redirect to="/" />}
-      <h1>Você está na aplicação agora</h1>
-      <div>
-        <p>Usuário: {session.user.name}</p>
-        <p>Token de autenticação: {session.token}</p>
-
-        <button onClick={() => disconnect()}>Sair</button>
+      <div className="main-app">
+        <SideBar />
       </div>
     </div>
   );

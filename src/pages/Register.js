@@ -1,5 +1,4 @@
 import React from "react";
-import "../style/App.css";
 import { Redirect } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
