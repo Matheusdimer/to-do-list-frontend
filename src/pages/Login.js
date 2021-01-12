@@ -9,7 +9,6 @@ export default function Login() {
   const [password, setPassword] = useState();
 
   const { session, signIn } = useContext(AuthContext);
-  const { switchTheme } = useContext(ThemeContext);
 
   document.title = "Login"
 

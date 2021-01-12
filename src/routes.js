@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Application from "./pages/Application";
 import { GlobalStyle } from "./style/GlobalStyle";
 import { AuthProvider, AuthContext } from "./contexts/authContext";
-import { ThemeProvider, ThemeContext } from "./contexts/ThemeContext";
+import { ThemeContext } from "./contexts/ThemeContext";
 
 function PrivateRoute({ component: Component, ...rest }) {
   const session = useContext(AuthContext);
