@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { shade } from "polished";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -8,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    background-color: ${props => props.theme.background};
   }
 
   .App {
@@ -129,19 +129,6 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-  .application button {
-    background-color: ${props => props.theme.secundary};
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 12pt;
-  }
-
-  .application button:hover {
-    background-color: ${props => shade(0.2, props.theme.secundary)};
-  }
-
   header {
     display: flex;
     padding: 0 1.5rem 0 1.5rem;
@@ -165,38 +152,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 25px;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    column-gap: 25px;
-  }
-
-  .sidebar {
-    background-color: ${props => props.theme.cards};
-    width: 20%;
-    height: 75vh;
-    display: flex;
-    padding-top: 10px;
-    justify-content: flex-start;
     flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-    box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
-    box-shadow: inset;
-    row-gap: 5px;
-  }
-
-  .sidebar-item {
-    height: 12%;
-    width: 90%;
-    display: flex;
-    align-items: center;
+    row-gap: 20px;
     justify-content: center;
-    border-bottom: 1px solid #a0a0a0;
-    transition: 300ms;
-  }
-
-  .sidebar-item:hover {
-    border: none;
-    border-radius: 10px;
-    background-color: ${props => props.theme.hover}
   }
 `;

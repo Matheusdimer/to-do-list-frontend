@@ -26,7 +26,6 @@ function PrivateRoute({ component: Component, ...rest }) {
 
 export default function Routes() {
   const { theme } = useContext(ThemeContext);
-  console.log(theme);
   return (
     <BrowserRouter>
       <GlobalStyle theme={theme} />
