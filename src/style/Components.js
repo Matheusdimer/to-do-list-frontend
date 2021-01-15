@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { shade } from "polished";
 
 export const ActionBar = styled.div`
-  position: fixed;
-  top: 90px;
+  position: sticky;
+  top: 10px;
   background-color: ${(props) => props.theme.cards};
   width: clamp(420px, 70%, 1000px);
   height: 60px;
@@ -16,6 +16,7 @@ export const ActionBar = styled.div`
   padding: 0 15px;
   box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
   box-shadow: inset;
+  z-index: 2;
 `;
 
 export const Button = styled.button`
@@ -39,12 +40,13 @@ export const Button = styled.button`
       else
         color = props.theme.hover;
       return shade(0.2, color);
-    }}
+    }};
+    cursor: pointer;
   }
 `;
 
 export const TasksList = styled.div`
-  width: clamp(420px, 70%, 1000px);
+  width: clamp(300px, 70%, 1000px);
   background-color: ${props => props.theme.cards};
   display: flex;
   flex-direction: column;
@@ -61,4 +63,47 @@ export const TaskCard = styled.div`
   border: 1px solid #888;
   padding: 15px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const AddCard = styled.div`
+  position: fixed;
+  top: ${props => props.show ? "10%" : "-100%"};
+  left: 25%;
+  width: 50%;
+  height: 25rem;
+  background-color: ${props => props.theme.cards};
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  border-radius: 10px;
+  transition: 300ms;
+
+  z-index: 3;
+
+  box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
+  box-shadow: inset;
+`;
+
+export const Campo = styled.input`
+  font-size: 12pt;
+  background-color: ${props => props.theme.hover};
+  color: ${props => props.theme.text};
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  padding: 5px 10px;
+`;
+
+export const Description = styled.textarea`
+  font-size: 12pt;
+  background-color: ${props => props.theme.hover};
+  color: ${props => props.theme.text};
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  height: 140px;
+  resize: none;
 `;

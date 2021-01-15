@@ -84,6 +84,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 14pt;
     color: #f0f0f0;
     transition: 300ms;
+    cursor: pointer;
   }
 
   .auth-button:hover {
@@ -155,5 +156,15 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     row-gap: 20px;
     justify-content: center;
+    transition: 400ms;
+  }
+
+  .add-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 15px;
+    margin-top: 50px;
   }
 `;

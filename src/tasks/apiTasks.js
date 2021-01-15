@@ -17,15 +17,16 @@ export async function createTask(task, token) {
   return result;
 }
 
-export async function updateTask(task, token) {
-  const url = api.server + "/task/" + task.id;
+export async function updateTask(taskId, modified, token) {
+  const url = api.server + "/task/" + taskId;
   
   const response = await fetch(url, {
     method: 'PUT',
     headers: new Headers({
       "Authorization": "Bearer " + token,
-      body: JSON.stringify(task)
-    })
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(modified)
   });
 
   const result = await response.json();
