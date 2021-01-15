@@ -1,27 +1,52 @@
 import React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AddCard, Campo, Description, Button } from '../style/Components';
 import { TaskController } from '../pages/Application';
 
-export default function AddTask({ show, theme }) {
-  const { saveTask, cancel } = useContext(TaskController);
+export default function AddTask({ show, theme, update }) {
+  const { saveTask, cancel, editTask } = useContext(TaskController);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
 
   async function save() {
-    const ok = await saveTask(name, description);
-    setError(!ok);
+    let ok;
+    if (!update.isUpdate) {
+      ok = await saveTask(name, description);
+      setError(!ok);
+    } else {
+      ok = await editTask({ _id: update.data._id, name, description });
+      setError(!ok);
+    }
+    
+    if(ok) {
+      clearInputs();
+    }
+  }
+
+  useEffect(() => {
+    if (update.isUpdate) {
+      setName(update.data.name);
+      setDescription(update.data.description);
+    } else {
+      clearInputs();
+    }
+  }, [update])
+
+  function clearInputs() {
+    setName("");
+    setDescription("");
   }
 
   return (
     <AddCard show={show} theme={theme} style={{ transition: "500ms" }}>
       <p>Nome da tarefa:</p>
-      <Campo theme={theme} onChange={({ target }) => setName(target.value)} />
+      <Campo value={name} className="add-taskInput" theme={theme} onChange={({ target }) => setName(target.value)} />
       <p>Descrição:</p>
       <Description
         theme={theme}
         onChange={({ target }) => setDescription(target.value)}
+        value={description}
       />
       <div className="add-buttons">
         {error && <p>Erro ao incluir tarefa</p>}

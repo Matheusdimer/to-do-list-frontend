@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { TaskCard } from "../style/Components";
-import Checkbox from "@material-ui/core/Checkbox";
+import { TaskCard, Checkbox, Button } from "../style/Components";
 
 import { TaskController } from "../pages/Application";
 
 export default function Tarefas({ dados, theme }) {
-  const { setFinished } = useContext(TaskController);
+  const { setFinished, removeTask, showEditTask } = useContext(TaskController);
 
   return dados.map((task, i) => {
     return (
@@ -23,12 +22,20 @@ export default function Tarefas({ dados, theme }) {
             </div>
           )}
         </div>
+
         {task.finished !== "none" && (
-          <Checkbox
-            checked={task.finished}
-            color="default"
-            onChange={() => setFinished(i)}
-          />
+          <div style={{ display: "flex", alignItems: "center", columnGap: 10 }}>
+            <Button theme={theme} onClick={() => showEditTask(i)}>Editar</Button>
+            <Button theme={theme} colored={true} onClick={() => removeTask(i)}>
+              Excluir
+            </Button>
+            <Checkbox
+              type="checkbox"
+              checked={task.finished}
+              onChange={() => setFinished(i)}
+              theme={theme}
+            ></Checkbox>
+          </div>
         )}
       </TaskCard>
     );

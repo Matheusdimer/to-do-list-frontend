@@ -5,7 +5,12 @@ import { AuthContext } from "../contexts/authContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { ActionBar, Button, TasksList } from "../style/Components";
 
-import { listTasks, createTask, updateTask } from "../tasks/apiTasks";
+import {
+  listTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../tasks/apiTasks";
 import Tarefas from "../components/Tarefas";
 import AddTask from "../components/AddTask";
 
@@ -15,6 +20,7 @@ export default function Application() {
   const { session, logout } = useContext(AuthContext);
   const [redirect, setRedirect] = useState(!session.loggedIn);
   const [showAddTask, setShowAddTask] = useState(false);
+  const [addConfig, setAddConfig] = useState({ isUpdate: false, data: {} });
   const [tasks, setTasks] = useState([
     {
       name: "Carregando...",
@@ -23,6 +29,8 @@ export default function Application() {
     },
   ]);
 
+  const [event, setEvent] = useState(true);
+
   const { theme, switchTheme, dark } = useContext(ThemeContext);
 
   document.title = "To Do List";
@@ -30,7 +38,6 @@ export default function Application() {
   useEffect(() => {
     async function fetchData() {
       const res = await listTasks(session.user._id, session.token);
-      console.log(res);
 
       if (res.tasks.length > 0) {
         setTasks(res.tasks);
@@ -46,7 +53,8 @@ export default function Application() {
     }
 
     fetchData();
-  }, [session.user._id, session.token]);
+    setEvent(false);
+  }, [event, session.user._id, session.token]);
 
   function ActionsBar() {
     return (
@@ -59,12 +67,28 @@ export default function Application() {
         >
           Adicionar
         </Button>
-        <Button theme={theme} colored={false} width="8rem">
-          Editar
-        </Button>
-        <Button theme={theme} colored={false} width="8rem">
-          Apagar
-        </Button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            columnGap: 5,
+            transition: 200
+          }}
+        >
+          <p>Modo Noturno</p>
+          <Switch
+            checked={dark}
+            height={15}
+            width={40}
+            onChange={() => switchTheme()}
+            checkedIcon={false}
+            uncheckedIcon={false}
+            handleDiameter={20}
+            onColor={theme.secundary}
+            offHandleColor="#e0e0e0"
+          />
+        </div>
       </ActionBar>
     );
   }
@@ -83,9 +107,10 @@ export default function Application() {
       },
       session.token
     );
-    console.log(res);
+
     if (res.ok) {
-      setTasks(tasks.concat([res.task]));
+      //setTasks(tasks.concat([res.task]));
+      setEvent(true);
       setShowAddTask(false);
       return true;
     } else {
@@ -95,6 +120,7 @@ export default function Application() {
 
   function cancel() {
     setShowAddTask(false);
+    setAddConfig({ isUpdate: false, data: {} });
   }
 
   async function setFinished(index) {
@@ -121,32 +147,41 @@ export default function Application() {
     }
   }
 
+  async function removeTask(index) {
+    const res = await deleteTask(tasks[index]._id, session.token);
+
+    if (res.ok) {
+      setEvent(true);
+    } else {
+      alert(res.message);
+    }
+  }
+
+  async function editTask(task) {
+    const res = await updateTask(task._id, task, session.token);
+
+    if (res.ok) {
+      setEvent(true);
+      setShowAddTask(false);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function showEditTask (index) {
+    setShowAddTask(true);
+    setAddConfig({ isUpdate: true, data: tasks[index], index });
+  }
+
   return (
-    <TaskController.Provider value={{ saveTask, cancel, setFinished }}>
+    <TaskController.Provider
+      value={{ saveTask, cancel, setFinished, removeTask, editTask, showEditTask }}
+    >
       <div className="application">
         <header>
           <div className="loginInfo">
             <h1>To Do List</h1>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                columnGap: 5,
-              }}
-            >
-              <p>Modo Noturno</p>
-              <Switch
-                checked={dark}
-                height={15}
-                width={40}
-                onChange={() => switchTheme()}
-                checkedIcon={false}
-                uncheckedIcon={false}
-                handleDiameter={20}
-                onColor={theme.secundary}
-              />
-            </div>
           </div>
           <div className="loginInfo">
             <h2>{session.user.name}</h2>
@@ -163,7 +198,7 @@ export default function Application() {
           </TasksList>
         </div>
 
-        <AddTask show={showAddTask} theme={theme} />
+        <AddTask show={showAddTask} theme={theme} update={addConfig} />
       </div>
     </TaskController.Provider>
   );

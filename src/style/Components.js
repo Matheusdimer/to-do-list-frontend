@@ -5,18 +5,18 @@ export const ActionBar = styled.div`
   position: sticky;
   top: 10px;
   background-color: ${(props) => props.theme.cards};
-  width: clamp(420px, 70%, 1000px);
+  width: clamp(300px, 70%, 1000px);
   height: 60px;
   display: flex;
   flex-direction: row;
   column-gap: 15px;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-radius: 5px;
   padding: 0 15px;
   box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
   box-shadow: inset;
-  z-index: 2;
+  transition: 300ms;
 `;
 
 export const Button = styled.button`
@@ -56,6 +56,7 @@ export const TasksList = styled.div`
   align-items: center;
   align-content: center;
   border-radius: 5px;
+  transition: 300ms;
 `;
 
 export const TaskCard = styled.div`
@@ -65,6 +66,7 @@ export const TaskCard = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -106,4 +108,11 @@ export const Description = styled.textarea`
   padding: 10px;
   height: 140px;
   resize: none;
+`;
+
+export const Checkbox = styled.input`
+  border-color: ${props => props.theme.text};
+  background: ${props => props.theme.cards};
+  height: 20px;
+  width: 20px;
 `;

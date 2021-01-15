@@ -156,7 +156,6 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     row-gap: 20px;
     justify-content: center;
-    transition: 400ms;
   }
 
   .add-buttons {
