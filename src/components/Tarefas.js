@@ -9,32 +9,36 @@ export default function Tarefas({ dados, theme }) {
   return dados.map((task, i) => {
     return (
       <TaskCard key={i} theme={theme}>
-        <div>
-          {task.finished === true ? (
-            <s>
-              <h2>{task.name}</h2>
-              <p>{task.description}</p>
-            </s>
-          ) : (
-            <div>
-              <h2>{task.name}</h2>
-              <p>{task.description}</p>
-            </div>
-          )}
+        <div style={{display: "flex", alignItems: "center", columnGap: 15}} >
+          <Checkbox
+            type="checkbox"
+            checked={task.finished}
+            onChange={() => setFinished(i)}
+            theme={theme}
+          ></Checkbox>
+          <div>
+            {task.finished === true ? (
+              <s>
+                <h2>{task.name}</h2>
+                <p>{task.description}</p>
+              </s>
+            ) : (
+              <div>
+                <h2>{task.name}</h2>
+                <p>{task.description}</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {task.finished !== "none" && (
           <div style={{ display: "flex", alignItems: "center", columnGap: 10 }}>
-            <Button theme={theme} onClick={() => showEditTask(i)}>Editar</Button>
+            <Button theme={theme} onClick={() => showEditTask(i)}>
+              Editar
+            </Button>
             <Button theme={theme} colored={true} onClick={() => removeTask(i)}>
               Excluir
             </Button>
-            <Checkbox
-              type="checkbox"
-              checked={task.finished}
-              onChange={() => setFinished(i)}
-              theme={theme}
-            ></Checkbox>
           </div>
         )}
       </TaskCard>
