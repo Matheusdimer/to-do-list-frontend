@@ -166,4 +166,27 @@ export const GlobalStyle = createGlobalStyle`
     column-gap: 15px;
     margin-top: 50px;
   }
+
+  .loading {
+    width: 3%;
+    position: fixed;
+    top: 48.5%;
+    left: 48.5%;
+    z-index: 5;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .loading {
+      animation: logo-spin infinite 1s linear;
+    }
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;

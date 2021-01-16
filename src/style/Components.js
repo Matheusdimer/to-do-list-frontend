@@ -74,12 +74,12 @@ export const AddCard = styled.div`
   position: fixed;
   top: ${props => props.show ? "10%" : "-100%"};
   left: 25%;
-  width: 50%;
+  width: 45%;
   height: 25rem;
   background-color: ${props => props.theme.cards};
   display: flex;
   flex-direction: column;
-  padding: 25px;
+  padding: 2.0%;
   border-radius: 10px;
   transition: 300ms;
 

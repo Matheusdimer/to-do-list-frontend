@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { ActionBar, Button, TasksList } from "../style/Components";
-
 import {
   listTasks,
   createTask,
@@ -13,6 +12,7 @@ import {
 } from "../tasks/apiTasks";
 import Tarefas from "../components/Tarefas";
 import AddTask from "../components/AddTask";
+import Loading from "../components/Loading";
 
 export const TaskController = createContext();
 
@@ -21,15 +21,10 @@ export default function Application() {
   const [redirect, setRedirect] = useState(!session.loggedIn);
   const [showAddTask, setShowAddTask] = useState(false);
   const [addConfig, setAddConfig] = useState({ isUpdate: false, data: {} });
-  const [tasks, setTasks] = useState([
-    {
-      name: "Carregando...",
-      description: "Por favor, aguarde.",
-      finished: "none",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   const [event, setEvent] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { theme, switchTheme, dark } = useContext(ThemeContext);
 
@@ -37,6 +32,7 @@ export default function Application() {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const res = await listTasks(session.user._id, session.token);
 
       if (res.tasks.length > 0) {
@@ -50,6 +46,8 @@ export default function Application() {
           },
         ]);
       }
+
+      setIsLoading(false);
     }
 
     fetchData();
@@ -73,7 +71,7 @@ export default function Application() {
             flexDirection: "row",
             alignItems: "center",
             columnGap: 5,
-            transition: 200
+            transition: 200,
           }}
         >
           <p>Modo Noturno</p>
@@ -99,6 +97,8 @@ export default function Application() {
   }
 
   async function saveTask(name, description) {
+    setIsLoading(true);
+
     const res = await createTask(
       {
         name,
@@ -107,6 +107,8 @@ export default function Application() {
       },
       session.token
     );
+    
+    setIsLoading(false);
 
     if (res.ok) {
       //setTasks(tasks.concat([res.task]));
@@ -148,7 +150,9 @@ export default function Application() {
   }
 
   async function removeTask(index) {
+    setIsLoading(true);
     const res = await deleteTask(tasks[index]._id, session.token);
+    setIsLoading(false);
 
     if (res.ok) {
       setEvent(true);
@@ -158,7 +162,10 @@ export default function Application() {
   }
 
   async function editTask(task) {
+    setIsLoading(true);
+
     const res = await updateTask(task._id, task, session.token);
+    setIsLoading(false);
 
     if (res.ok) {
       setEvent(true);
@@ -169,14 +176,21 @@ export default function Application() {
     }
   }
 
-  function showEditTask (index) {
+  function showEditTask(index) {
     setShowAddTask(true);
     setAddConfig({ isUpdate: true, data: tasks[index], index });
   }
 
   return (
     <TaskController.Provider
-      value={{ saveTask, cancel, setFinished, removeTask, editTask, showEditTask }}
+      value={{
+        saveTask,
+        cancel,
+        setFinished,
+        removeTask,
+        editTask,
+        showEditTask,
+      }}
     >
       <div className="application">
         <header>
@@ -193,9 +207,12 @@ export default function Application() {
         {redirect && <Redirect to="/" />}
         <div className="main-app">
           <ActionsBar />
-          <TasksList theme={theme}>
-            <Tarefas dados={tasks} theme={theme} />
-          </TasksList>
+          {isLoading && <Loading />}
+          {tasks.length > 0 && (
+            <TasksList theme={theme}>
+              <Tarefas dados={tasks} theme={theme} />
+            </TasksList>
+          )}
         </div>
 
         <AddTask show={showAddTask} theme={theme} update={addConfig} />
