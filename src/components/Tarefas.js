@@ -9,13 +9,15 @@ export default function Tarefas({ dados, theme }) {
   return dados.map((task, i) => {
     return (
       <TaskCard key={i} theme={theme}>
-        <div style={{display: "flex", alignItems: "center", columnGap: 15}} >
-          <Checkbox
-            type="checkbox"
-            checked={task.finished}
-            onChange={() => setFinished(i)}
-            theme={theme}
-          ></Checkbox>
+        <div style={{ display: "flex", alignItems: "center", columnGap: 15 }}>
+          {task.finished !== "none" && (
+            <Checkbox
+              type="checkbox"
+              checked={task.finished}
+              onChange={() => setFinished(i)}
+              theme={theme}
+            ></Checkbox>
+          )}
           <div>
             {task.finished === true ? (
               <s>
