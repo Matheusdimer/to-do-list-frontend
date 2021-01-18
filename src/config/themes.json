@@ -1,5 +1,6 @@
 {
     "light": {
+        "name": "Light",
         "primary": "#3A606E",
         "secundary": "#FC5130",
         "cards": "#fff",
@@ -8,6 +9,7 @@
         "hover": "#e0e0e0"
     },
     "dark": {
+        "name": "Dark",
         "primary": "#394648",
         "secundary": "#FC5130",
         "cards": "#666",

@@ -121,10 +121,13 @@ export const Description = styled.textarea`
 `;
 
 export const Checkbox = styled.input`
-  border-color: ${props => props.theme.text};
-  background: ${props => props.theme.cards};
   height: 20px;
   width: 20px;
+
+  &[type="checkbox"] {
+    filter: hue-rotate(80deg) ${props => props.theme.name === "Light" ? "" : "invert(70%);"}
+  }
+  
 `;
 
 export const IconButton = styled.button`
