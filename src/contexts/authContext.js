@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, createContext } from 'react';
+import { useState, createContext, useCallback } from 'react';
 import authenticate from '../auth/authenticate';
 import register from '../auth/register'
 
@@ -35,11 +35,11 @@ export function AuthProvider({ children }) {
     setSession(signUp_reponse);
   }
 
-  function logout() {
+  const logout = useCallback(() => {
     localStorage.removeItem("Session");
 
-    setSession({...session, loggedIn: false})
-  }
+    setSession(oldSession => setSession({...oldSession, loggedIn: false}));
+  }, [])
 
   return (
     <AuthContext.Provider value={{ session, signIn, logout, signUp }}>

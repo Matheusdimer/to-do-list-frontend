@@ -35,6 +35,19 @@ export default function Application() {
       setIsLoading(true);
       const res = await listTasks(session.user._id, session.token);
 
+      if (res.error) {
+        setTasks([
+          {
+            name: "Sua sessão expirrou",
+            description: "Por favor, faça login novamente.",
+            finished: "none",
+          }
+        ]);
+        logout();
+        setRedirect(true);
+        return;
+      }
+
       if (res.tasks.length > 0) {
         setTasks(res.tasks);
       } else {
@@ -52,7 +65,7 @@ export default function Application() {
 
     fetchData();
     setEvent(false);
-  }, [event, session.user._id, session.token]);
+  }, [event, session.user._id, session.token, logout]);
 
   function ActionsBar() {
     return (
