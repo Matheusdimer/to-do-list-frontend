@@ -167,16 +167,36 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: 50px;
   }
 
-  .loading {
-    width: 3%;
+  .loading-box {
+    width: 50px;
+    height: 50px;
     position: fixed;
-    top: 48.5%;
-    left: 48.5%;
     z-index: 5;
+    background-color: #212121;
+    border-radius: 10px;
+    padding: 16px;
+
+    top: 50%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -40px;
+  }
+
+  .loading {
+    width: 100%;
+    z-index: 6;
+  }
+
+  .login-load {
+    width: 20px;
+    height: 20px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .loading {
+      animation: logo-spin infinite 1s linear;
+    }
+    .login-load {
       animation: logo-spin infinite 1s linear;
     }
   }
@@ -188,5 +208,10 @@ export const GlobalStyle = createGlobalStyle`
     to {
       transform: rotate(360deg);
     }
+  }
+
+  ion-icon {
+    color: ${props => props.theme.text};
+    font-size: 28px;
   }
 `;

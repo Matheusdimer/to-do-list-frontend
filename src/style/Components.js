@@ -5,7 +5,7 @@ export const ActionBar = styled.div`
   position: sticky;
   top: 10px;
   background-color: ${(props) => props.theme.cards};
-  width: clamp(300px, 70%, 1000px);
+  width: clamp(300px, 98%, 850px);
   height: 60px;
   display: flex;
   flex-direction: row;
@@ -17,6 +17,7 @@ export const ActionBar = styled.div`
   box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
   box-shadow: inset;
   transition: 300ms;
+  z-index: 2;
 `;
 
 export const Button = styled.button`
@@ -30,6 +31,9 @@ export const Button = styled.button`
   height: 30px;
   border: none;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 
   &:hover {
     background-color: ${props => {
@@ -46,7 +50,7 @@ export const Button = styled.button`
 `;
 
 export const TasksList = styled.div`
-  width: clamp(300px, 70%, 1000px);
+  width: clamp(300px, 98%, 850px);
   background-color: ${props => props.theme.cards};
   display: flex;
   flex-direction: column;
@@ -72,14 +76,14 @@ export const TaskCard = styled.div`
 
 export const AddCard = styled.div`
   position: fixed;
-  top: ${props => props.show ? "10%" : "-100%"};
-  left: 25%;
-  width: 45%;
+  top: ${props => props.show ? "15%" : "-100%"};
+  left: 50%;
+  width: clamp(300px, 90%, 600px);
   height: 25rem;
   background-color: ${props => props.theme.cards};
   display: flex;
   flex-direction: column;
-  padding: 2.0%;
+  padding: 20px;
   border-radius: 10px;
   transition: 300ms;
 
@@ -87,6 +91,12 @@ export const AddCard = styled.div`
 
   box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
   box-shadow: inset;
+
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
 `;
 
 export const Campo = styled.input`
@@ -115,4 +125,17 @@ export const Checkbox = styled.input`
   background: ${props => props.theme.cards};
   height: 20px;
   width: 20px;
+`;
+
+export const IconButton = styled.button`
+  background-color: transparent;
+  border: none;
+  transition: 300ms;
+  height: 60px;
+  width: 60px;
+  border-radius: 50px;
+
+  &:hover {
+    background-color: ${props => props.theme.hover};
+  }
 `;

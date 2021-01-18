@@ -2,11 +2,13 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
+import Loading from "../components/Loading";
 
 export default function Register() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { signUp, session } = useContext(AuthContext);
 
@@ -17,6 +19,7 @@ export default function Register() {
   return (
     <div className="auth-page">
       {session.loggedIn && <Redirect to="/app" />}
+      {isLoading && <Loading />}
       <div className="registerBox">
         <p className="label">
           Nome completo
@@ -53,7 +56,11 @@ export default function Register() {
         ></input>
         <button
           className="auth-button"
-          onClick={() => signUp(email, name, password)}
+          onClick={async () => {
+            setIsLoading(true);
+            await signUp(email, name, password);
+            setIsLoading(false);
+          }}
         >
           Criar conta
         </button>

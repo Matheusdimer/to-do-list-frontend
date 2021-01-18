@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TaskCard, Checkbox, Button } from "../style/Components";
+import { TaskCard, Checkbox, IconButton } from "../style/Components";
 
 import { TaskController } from "../pages/Application";
 
@@ -35,12 +35,12 @@ export default function Tarefas({ dados, theme }) {
 
         {task.finished !== "none" && (
           <div style={{ display: "flex", alignItems: "center", columnGap: 10 }}>
-            <Button theme={theme} onClick={() => showEditTask(i)}>
-              Editar
-            </Button>
-            <Button theme={theme} colored={true} onClick={() => removeTask(i)}>
-              Excluir
-            </Button>
+            <IconButton theme={theme} onClick={() => showEditTask(i)}>
+              <ion-icon name="create-outline"></ion-icon>
+            </IconButton>
+            <IconButton theme={theme} onClick={() => removeTask(i)}>
+              <ion-icon name="trash-outline"></ion-icon>
+            </IconButton>
           </div>
         )}
       </TaskCard>

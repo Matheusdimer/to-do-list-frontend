@@ -63,6 +63,7 @@ export default function Application() {
           colored={true}
           width="8rem"
         >
+          <ion-icon style={{color: "#fff", fontSize: 24}} name="add-outline"></ion-icon>
           Adicionar
         </Button>
         <div

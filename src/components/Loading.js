@@ -1,8 +1,10 @@
 import React from 'react';
-import logo from './loading.svg';
+import logo from '../icons/loading.svg';
 
 export default function Loading() {
   return (
-    <img src={logo} className="loading" alt="Loading" />
+    <div className="loading-box">
+      <img src={logo} className="loading" alt="Loading" />
+    </div>
   );
 }
