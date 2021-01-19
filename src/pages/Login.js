@@ -17,10 +17,12 @@ export default function Login() {
     return session.fieldErr === field ? true : false;
   }
 
-  async function sendLogin() {
+  async function sendLogin(event) {
+    event.preventDefault();
+    
     setIsLoading(true);
     await signIn(email, password);
-    setIsLoading(false);
+    setIsLoading(false);  
   }
 
   return (
@@ -28,31 +30,33 @@ export default function Login() {
       {session.loggedIn && <Redirect to="/app" />}
       {isLoading && <Loading />}
       <div className="loginBox">
-        <p className="label">
-          E-mail
-          {isFieldErr("email") && (
-            <span className="error-message">Usuário inválido</span>
-          )}
-        </p>
-        <input
-          className={`auth-input ${isFieldErr("email") ? "error" : ""}`}
-          type="email"
-          onChange={({ target }) => setEmail(target.value)}
-        ></input>
-        <p className="label">
-          Senha
-          {isFieldErr("password") && (
-            <span className="error-message">Senha inválida</span>
-          )}
-        </p>
-        <input
-          className={`auth-input ${isFieldErr("password") ? "error" : ""}`}
-          type="password"
-          onChange={({ target }) => setPassword(target.value)}
-        ></input>
-        <button type="submit" className="auth-button" onClick={() => sendLogin()}>
-          Login
-        </button>
+        <form className="auth-form" onSubmit={sendLogin}>
+          <p className="label">
+            E-mail
+            {isFieldErr("email") && (
+              <span className="error-message">Usuário inválido</span>
+            )}
+          </p>
+          <input
+            className={`auth-input ${isFieldErr("email") ? "error" : ""}`}
+            type="email"
+            onChange={({ target }) => setEmail(target.value)}
+          ></input>
+          <p className="label">
+            Senha
+            {isFieldErr("password") && (
+              <span className="error-message">Senha inválida</span>
+            )}
+          </p>
+          <input
+            className={`auth-input ${isFieldErr("password") ? "error" : ""}`}
+            type="password"
+            onChange={({ target }) => setPassword(target.value)}
+          ></input>
+          <button type="submit" className="auth-button">
+            Login
+          </button>
+        </form>
         <div className="sign-up">
           <p>Não possui uma conta? </p>
           <Link

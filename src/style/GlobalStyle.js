@@ -52,6 +52,11 @@ export const GlobalStyle = createGlobalStyle`
     transition: 300ms;
   }
 
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+  }
+
   .auth-input {
     font-size: 14pt;
     padding-bottom: 0.3rem;
