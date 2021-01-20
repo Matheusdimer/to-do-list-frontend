@@ -4,10 +4,15 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     color: ${props => props.theme.text};
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     background-color: ${props => props.theme.background};
+  }
+
+  p {
+    white-space: pre-wrap;
+    line-height: 25px;
   }
 
   .App {
@@ -44,12 +49,13 @@ export const GlobalStyle = createGlobalStyle`
     align-items: left;
     flex-direction: column;
     width: clamp(15rem, 25rem, 25rem);
-    height: 20rem;
+    height: 22rem;
     background-color: ${props => props.theme.cards};
     padding: 2rem;
     box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
     box-shadow: inset;
     transition: 300ms;
+    justify-content: center;
   }
 
   .auth-form {
@@ -83,7 +89,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .auth-button {
     margin-top: 2rem;
-    background: #609ff1;
+    background: ${props => props.theme.primary};
     border: none;
     height: 2.5rem;
     font-size: 14pt;
@@ -93,7 +99,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .auth-button:hover {
-    background: #7fb3f7;
+    background: ${props => props.theme.primary};
   }
 
   .sign-up {
@@ -106,11 +112,12 @@ export const GlobalStyle = createGlobalStyle`
     align-items: left;
     flex-direction: column;
     width: 25rem;
-    height: 20rem;
+    height: 22rem;
     background-color: ${props => props.theme.cards};
     padding: 2rem;
     box-shadow: 4px 7px 18px -2px rgba(0,0,0,0.53);
     box-shadow: inset;
+    justify-content: center;
   }
 
   .Home {

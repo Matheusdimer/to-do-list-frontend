@@ -41,7 +41,7 @@ export default function AddTask({ show, theme, update }) {
   return (
     <AddCard show={show} theme={theme} style={{ transition: "500ms" }}>
       <p>Nome da tarefa:</p>
-      <Campo value={name} className="add-taskInput" theme={theme} onChange={({ target }) => setName(target.value)} />
+      <Campo value={name} theme={theme} onChange={({ target }) => setName(target.value)} />
       <p>Descrição:</p>
       <Description
         theme={theme}

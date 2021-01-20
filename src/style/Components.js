@@ -84,7 +84,7 @@ export const AddCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   transition: 300ms;
 
   z-index: 3;
@@ -100,13 +100,18 @@ export const AddCard = styled.div`
 `;
 
 export const Campo = styled.input`
-  font-size: 12pt;
+  font-size: 13pt;
   background-color: ${props => props.theme.hover};
   color: ${props => props.theme.text};
   border: none;
-  border-radius: 5px;
+  border-radius: 0;
+  border-bottom: 2px solid ${props => shade(0.3, props.theme.hover)};
   height: 30px;
-  padding: 5px 10px;
+  padding: 2px 10px;
+
+  &:focus {
+    border-bottom: 2px solid ${props => props.theme.primary};
+  }
 `;
 
 export const Description = styled.textarea`
@@ -114,10 +119,15 @@ export const Description = styled.textarea`
   background-color: ${props => props.theme.hover};
   color: ${props => props.theme.text};
   border: none;
-  border-radius: 5px;
+  border-bottom: 2px solid ${props => shade(0.3, props.theme.hover)};
+  border-radius: 0;
   padding: 10px;
   height: 140px;
   resize: none;
+
+  &:focus {
+    border-bottom: 2px solid ${props => props.theme.primary};
+  }
 `;
 
 export const Checkbox = styled.input`

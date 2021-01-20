@@ -1,17 +1,17 @@
 {
     "light": {
         "name": "Light",
-        "primary": "#3A606E",
-        "secundary": "#FC5130",
+        "primary": "#235789",
+        "secundary": "#ED1C24",
         "cards": "#fff",
         "background": "#E0E0E0",
         "text": "#333",
-        "hover": "#e0e0e0"
+        "hover": "#f0f0f0"
     },
     "dark": {
         "name": "Dark",
-        "primary": "#394648",
-        "secundary": "#FC5130",
+        "primary": "#496B83",
+        "secundary": "#ED1C24",
         "cards": "#666",
         "background": "#333",
         "text": "#f0f0f0",
